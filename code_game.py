@@ -246,7 +246,7 @@ class Soldier(pygame.sprite.Sprite):
 
         self.vel_y += GRAVITY
         if self.vel_y > 10:
-            self.vel_y
+            self.vel_y = 10
         dy += self.vel_y
 
         # Check collision with tiles
@@ -280,6 +280,7 @@ class Soldier(pygame.sprite.Sprite):
                     # Jika player berdiri di platform, ikut bergerak dengan platform
                     if self.char_type == 'zeero':
                         self.rect.x += platform.speed * platform.move_direction
+                        dx += platform.speed * platform.move_direction
 
         level_complete = False
         if pygame.sprite.spritecollide(self, exit_group, False):
@@ -412,9 +413,9 @@ class World:
                         global player, health_bar
                         player = Soldier('zeero', 
                             x * TILE_SIZE, 
-                            y * TILE_SIZE + 15,0.8,3,20, damage=200)
-                        player.health = 2000
-                        player.max_health = 2000
+                            y * TILE_SIZE + 15,0.8,3,20, damage=25)
+                        player.health = 200
+                        player.max_health = 200
                         health_bar = HealthBar(10, 10, player.health, player.max_health)    
                     elif tile == 8:  # Enemy1
                         enemy = Soldier('enemy1', x * TILE_SIZE, y * TILE_SIZE, 1.0, 2, 20, damage=10)
@@ -526,6 +527,9 @@ class Bullet(pygame.sprite.Sprite):
             # Check if bullet is from enemy (direction opposite player)
             if player.alive:
                 player.health -= self.damage
+                if player.health <= 0:
+                    player.health = 0
+                    player.alive = False
                 self.kill()
 
         # Bullet hitting enemies
@@ -534,7 +538,9 @@ class Bullet(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(enemy, self) and self.direction == player.direction:
                 if enemy.alive:
                     enemy.health -= self.damage
-                    if enemy.health <= 0:  # Jika musuh mati
+                    if enemy.health <= 0:
+                        enemy.health = 0
+                        enemy.alive = False
                         global score
                         if enemy.char_type == 'enemy1':
                             score += 10
@@ -669,11 +675,18 @@ def handle_level_transition():
                     world = World()
                     player, health_bar = world.process_data(world_data)
                     
+                    # Reset enemy and item groups
+                    enemy_group.empty()
+                    bullet_group.empty()
+                    item_box_group.empty()
+                    decoration_group.empty()
+                    exit_group.empty()
+                    
                     # Prepare for fade in
                     transition_fade.reset()
-                    transition_fade.fade_counter = SCREEN_HEIGHT  # Start from full black
+                    transition_fade.fade_counter = SCREEN_HEIGHT
                     transition_fade.fade_complete = False
-                    transition_fade.speed = -8  # Reverse the fade direction
+                    transition_fade.speed = -8
                     
                     level_complete = False
                 except FileNotFoundError:
