@@ -1,5 +1,5 @@
 import pygame
-from pygame import mixer
+from pygame import mixer 
 import os
 import random
 import csv
@@ -29,7 +29,7 @@ TILE_TYPES = 14
 MAX_LEVELS = 3
 screen_scroll = 0
 bg_scroll = 0
-level = 1
+level = 3
 start_game = False
 start_intro = False
 score = 0  # Menambahkan variabel skor
