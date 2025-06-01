@@ -68,9 +68,15 @@ install Pygame:
 2. install Pygame:
  ```bash
 pip install pygame
+```
 
 3. Run the game:
-''''bash
+```bash
 python code_game.py
+```
+refrensi: 
+https://github.com/russs123/Shooter 
 
-   
+
+
+
