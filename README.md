@@ -62,13 +62,15 @@ install Pygame:
 1. Clone the repository
    ```bash
    git clone https://github.com/yourusername/shadow-protocol.git
+   
    cd shadow-protocol
-
+   
+2. install Pygame:
  ```bash
 pip install pygame
 
+3. Run the game:
 ''''bash
-Run the game:
 python code_game.py
 
    
