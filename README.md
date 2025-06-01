@@ -74,7 +74,7 @@ pip install pygame
 ```bash
 python code_game.py
 ```
-refrensi: 
+## Refrensi: 
 https://github.com/russs123/Shooter 
 
 
